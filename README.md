@@ -6,7 +6,6 @@ Um aplicativo mobile de controle financeiro pessoal, desenvolvido com **React Na
 
 - **React Native** — para desenvolvimento mobile multiplataforma
 - **SQLite** — banco de dados local para armazenar transações do usuário
-- **React Navigation** — navegação entre telas via tabs
 - **Context API** — gerenciamento de estado compartilhado (transações e usuário)
 - **react-native-pie-chart** — gráfico de pizza para visualização de gastos
 - **TypeScript** — tipagem estática para maior segurança e escalabilidade
@@ -14,7 +13,6 @@ Um aplicativo mobile de controle financeiro pessoal, desenvolvido com **React Na
 ## ✨ Funcionalidades
 
 - Cadastro de usuário
-- Login com persistência local
 - Registro de transações com:
   - Descrição
   - Valor
@@ -31,9 +29,3 @@ Um aplicativo mobile de controle financeiro pessoal, desenvolvido com **React Na
   - Perfil (visível somente para usuários com ID 1)
 - Modal para cadastro de nova transação
 - Indicador de carregamento reutilizável
-
-## 📱 Layout
-
-- Interface moderna com fundo escuro (`#0f172a`)
-- Uso de ícones, botões e animações para melhor experiência do usuário
-- Ícone giratório ao recarregar saldo
