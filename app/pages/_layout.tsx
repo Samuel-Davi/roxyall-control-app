@@ -52,7 +52,16 @@ export default function Layout() {
                 }
               }}
             />
-            {(user && user.id === 1) ? (
+            <Tabs.Screen
+              name='home'
+              options={{
+                title: "Home",
+                tabBarIcon: () => {
+                  return <Ionicons name='home' size={18} color='white' />
+                }
+              }}
+            />
+            {/* {(user && user.id === 1) ? (
               <Tabs.Screen
                 name='dados'
                 options={{
@@ -69,7 +78,7 @@ export default function Layout() {
                   href:null
                 }}
               />
-            )}
+            )} */}
           </Tabs>
         </TransactionsProvider>
       </ProtectedRoute>

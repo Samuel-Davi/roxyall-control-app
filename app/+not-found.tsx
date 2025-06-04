@@ -1,5 +1,6 @@
 import { View, StyleSheet } from 'react-native';
 import { Link, Stack } from 'expo-router';
+import { Text } from 'react-native-svg';
 
 export default function NotFoundScreen() {
   return (
@@ -7,7 +8,7 @@ export default function NotFoundScreen() {
       <Stack.Screen options={{ title: 'Oops! Not Found' }} />
       <View style={styles.container}>
         <Link href="/" style={styles.button}>
-          Go back to Home screen!
+          <Text>Go back to Home screen!</Text>
         </Link>
       </View>
     </>

@@ -100,7 +100,7 @@ export default function Dashboard(){
 
 const styles = StyleSheet.create({
     allScreen:{
-        flex: 1, 
+        flex:1,
         backgroundColor: '#0f172a',
         alignItems: 'center',
     },

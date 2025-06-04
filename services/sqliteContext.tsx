@@ -137,10 +137,23 @@ export async function verificaLogin(email: string, password: string, db:SQLiteDa
     }
 }
 
+export async function deleteUser(email: string, db:SQLiteDatabase){
+  try{
+    if (db){
+      await db.runAsync(`delete from users where email=?;`, email);
+      console.log("deletou");
+    }
+  }catch(error){
+    console.log(error)
+  }
+}
+
 export const SQLiteProvider: React.FC<SQLiteProviderProps> = ({ databaseName, children, useSuspense = false }) => {
   const [db, setDb] = useState<SQLiteDatabase>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<Error | null>(null);
+
+  console.log('SQLiteProvider montou');
 
   useEffect(() => {
     async function initializeDatabase() {
@@ -148,7 +161,6 @@ export const SQLiteProvider: React.FC<SQLiteProviderProps> = ({ databaseName, ch
         const database = await SQLite.openDatabaseAsync(databaseName);
         setDb(database)
 
-        // Executar a criação de tabelas aqui
         await database.execAsync(`
             CREATE TABLE IF NOT EXISTS users (
               id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -183,8 +195,6 @@ export const SQLiteProvider: React.FC<SQLiteProviderProps> = ({ databaseName, ch
     initializeDatabase();
   }, [databaseName]);
 
-  const value = db;
-
   if (useSuspense && loading) {
     throw new Promise(() => {});
   }
@@ -199,13 +209,17 @@ export const SQLiteProvider: React.FC<SQLiteProviderProps> = ({ databaseName, ch
     );
   }
 
+  if (loading) {
+    return (
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <Fallback />
+      </View>
+    );
+  }
+
   return (
-    <SQLiteContext.Provider value={value}>
-      {!loading ? (
-        children
-      ) : (
-        <Fallback/>
-      )}
+    <SQLiteContext.Provider value={db}>
+      {children}
     </SQLiteContext.Provider>
   );
 };

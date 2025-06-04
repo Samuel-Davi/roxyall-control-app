@@ -7,7 +7,6 @@ export const Fallback = () => {
 
   return (
     <View style={{ height:height, justifyContent: 'center' ,gap: height*0.025, borderColor: 'black', borderWidth:1, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-      {/* Substitua pelo caminho real do seu logo */}
       <Image 
         source={logoImage} 
         alt="Logo da Aplicação" 

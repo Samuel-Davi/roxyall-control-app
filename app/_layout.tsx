@@ -1,15 +1,17 @@
 import { AuthProvider } from "@/context/AuthContext";
-import { setupDatabase } from "@/services/setupDatabase";
+// import { setupDatabase } from "@/services/setupDatabase";
 import { SQLiteProvider } from "@/services/sqliteContext";
 import { Stack } from "expo-router";
-import { useEffect } from "react";
+// import { useEffect } from "react";
 import Toast from 'react-native-toast-message'
 
 export default function RootLayout() {
 
-  useEffect(() => {
-    setupDatabase()
-  }, [])
+  // useEffect(() => {
+  //   setupDatabase()
+  // }, [])
+
+  console.log("root layout");
 
   return (
     <AuthProvider>
@@ -21,7 +23,7 @@ export default function RootLayout() {
           <Stack.Screen name="index"/>
           <Stack.Screen name="cadastro"/>
           <Stack.Screen name="+not-found"/>
-        </Stack>;
+        </Stack>
       </SQLiteProvider>
       <Toast />
     </AuthProvider>
