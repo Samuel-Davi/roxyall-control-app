@@ -60,7 +60,7 @@ export default function AnimatedLogin() {
     const user = await verificaLogin(email, password, db)
     if(user){
       login(user)
-      router.push('/pages/dashboard')
+      router.push('/pages/home')
     }
   }
 

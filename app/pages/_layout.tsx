@@ -16,7 +16,7 @@ export default function Layout() {
     >
       <ProtectedRoute>
         <TransactionsProvider>
-          <Header/>
+          {/* <Header/> */}
           <Tabs
             screenOptions={() => ({
               headerShown: false,
@@ -35,14 +35,15 @@ export default function Layout() {
             })}
           >
             <Tabs.Screen
-              name="dashboard"
+              name='home'
               options={{
-                title: 'Painel',
+                title: "Home",
                 tabBarIcon: () => {
-                  return <Ionicons name='speedometer' size={18} color='white' />;
+                  return <Ionicons name='home' size={18} color='white' />
                 }
               }}
             />
+            
             <Tabs.Screen
               name="transactions"
               options={{
@@ -53,11 +54,11 @@ export default function Layout() {
               }}
             />
             <Tabs.Screen
-              name='home'
+              name="dashboard"
               options={{
-                title: "Home",
+                title: 'Painel',
                 tabBarIcon: () => {
-                  return <Ionicons name='home' size={18} color='white' />
+                  return <Ionicons name='speedometer' size={18} color='white' />;
                 }
               }}
             />

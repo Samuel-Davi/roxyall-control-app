@@ -153,8 +153,6 @@ export const SQLiteProvider: React.FC<SQLiteProviderProps> = ({ databaseName, ch
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<Error | null>(null);
 
-  console.log('SQLiteProvider montou');
-
   useEffect(() => {
     async function initializeDatabase() {
       try {
