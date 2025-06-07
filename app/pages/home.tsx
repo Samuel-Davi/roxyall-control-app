@@ -3,6 +3,8 @@ import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
 import { Ionicons, MaterialIcons } from '@expo/vector-icons';
 import { useAuth } from '@/context/AuthContext';
 import { getSaldoFromBD, SQLiteContext } from '@/services/sqliteContext';
+import { CreditCard } from '@/components/CreditCard';
+import AccountBox from '@/components/AccountBox';
 
 export default function Home() {
 
@@ -49,33 +51,14 @@ export default function Home() {
         <View style={styles.saldoGeral}>
           <View>
             <Text style={styles.infoText}>Saldo geral</Text>
-            <Text style={[styles.money, {color: saldoVisible ? '#fff' : 'gray'}]}>R$ {saldoVisible ?  saldo : "---"}</Text>
+            <Text style={[styles.money, {color: saldoVisible ? '#fff' : 'gray'}]}>{saldoVisible ?  "R$ " + saldo : "---"}</Text>
           </View>
           <TouchableOpacity onPress={() => setSaldoVisible(prev => !prev)}>
             <Ionicons name={saldoVisible ? 'eye' : 'eye-off'} size={28} color="white" />
           </TouchableOpacity>
         </View>
         <Text style={styles.infoText}>Minhas contas</Text>
-        <View style={styles.accountItem}>
-          <View style={styles.accountItem}>
-            <View style={styles.circleBlue} />
-              <View>
-                <Text style={styles.accountName}>Carteira</Text>
-                <Text style={styles.accountType}>Conta manual</Text>
-              </View>          
-            </View>
-          <Text style={[styles.accountMoney, {color: saldoVisible ? '#fff' : 'gray'}]}>R$ {saldoVisible ? "17,00" : "---"}</Text>
-        </View>
-        <View style={styles.accountItem}>
-          <View style={styles.accountItem}>
-            <View style={styles.circlePurple} />
-            <View>
-              <Text style={styles.accountName}>Conta Principal</Text>
-              <Text style={styles.accountType}>Conta manual</Text>
-            </View>
-          </View>
-          <Text style={[styles.accountMoney, {color: saldoVisible ? '#fff' : 'gray'}]}>R$ {saldoVisible ? "121,84" : "---"}</Text>
-        </View>
+        <AccountBox name='Carteira' visible={saldoVisible} />
         <TouchableOpacity style={styles.buttonOutline}>
           <Text style={styles.buttonOutlineText}>Gerenciar contas</Text>
         </TouchableOpacity>
@@ -84,22 +67,17 @@ export default function Home() {
         <View style={styles.saldoGeral}>
           <View>
             <Text style={styles.infoText}>Todas as Faturas</Text>
-            <Text style={[styles.money, {color: faturaVisible ? 'red' : 'gray'}]}>-R$ {faturaVisible ?  "85.00" : "---"}</Text>
+            <Text style={[styles.money, {color: faturaVisible ? 'red' : 'gray'}]}>{faturaVisible ?  "-R$ 85.00" : "---"}</Text>
           </View>
           <TouchableOpacity onPress={() => setFaturaVisible(prev => !prev)}>
             <Ionicons name={faturaVisible ? 'eye' : 'eye-off'} size={28} color="white" />
           </TouchableOpacity>
         </View>
         <Text style={styles.infoText}>Meus Cartões</Text>
-        <View style={styles.accountItem}>
-          <View style={styles.accountItem}>
-            <View style={styles.circlePurple} />
-            <View>
-              <Text style={styles.accountName}>Cartão Nubank</Text>
-            </View>          
-          </View>
-          <Text style={[styles.accountMoney, {color: faturaVisible ? 'red' : 'gray'}]}>R$ {faturaVisible ? "-85,00" : "---"}</Text>
-        </View>
+        <CreditCard name='Nubank' moneyVisible={faturaVisible} />
+        <TouchableOpacity style={styles.buttonOutline}>
+          <Text style={styles.buttonOutlineText}>Gerenciar Cartões</Text>
+        </TouchableOpacity>
       </View>
     </View>
   );
@@ -208,13 +186,6 @@ const styles = StyleSheet.create({
     fontSize: 22,
     fontWeight: 'bold',
   },
-  accountItem: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    paddingVertical: 10,
-    columnGap: 10
-  },
   circleBlue: {
     width: 45,
     height: 45,
@@ -228,18 +199,6 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     backgroundColor: '#a855f7',
     marginRight: 10,
-  },
-  accountName: {
-    color: '#fff',
-    fontWeight: 'bold',
-  },
-  accountType: {
-    color: '#9ca3af',
-    fontSize: 12,
-  },
-  accountMoney: {
-    color: '#fff',
-    fontWeight: 'bold',
   },
   buttonOutline: {
     borderWidth: 1,

@@ -14,6 +14,7 @@ import { useRouter } from 'expo-router';
 import { SQLiteContext, verificaLogin } from '@/services/sqliteContext';
 import Toast from 'react-native-toast-message'
 import { useAuth } from '@/context/AuthContext';
+import { userMockData } from '@/utils/utils';
 
 export default function AnimatedLogin() {
 
@@ -57,7 +58,8 @@ export default function AnimatedLogin() {
       console.log("banco de dados não carregado")
       return
     }
-    const user = await verificaLogin(email, password, db)
+    // const user = await verificaLogin(email, password, db)
+    const user = userMockData.find(value => value.id == 1)
     if(user){
       login(user)
       router.push('/pages/home')
