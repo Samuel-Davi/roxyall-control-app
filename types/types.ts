@@ -4,5 +4,11 @@ export type Transaction = {
     amount: number;
     date: string;
     category: string;
-  };
+};
   
+export type User = {
+    id: number;
+    name: string;
+    password?: string;
+    avatar: string;
+}

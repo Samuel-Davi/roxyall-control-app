@@ -1,14 +1,12 @@
-import { Transaction } from "../types/Transaction";
+
 
 //mockData
-export const userMockData = [
+export const userMockData:User[] = [
   {
     id: 1,
     name: "Samuel",
     password: "samuellima",
-    saldoTotal: 0,
-    faturaTotal: 0,
-    // avatar: ''  a colocar no bd
+    avatar: ''
   },
 ]
 
@@ -22,12 +20,14 @@ type AccountName = typeof accountNames[number];
 type CardName = typeof cardNames[number];
 
 type TypeContasMockDatas = {
+  id:number;
   id_user:number;
   nome: AccountName;
   saldo: number
 }
 
 type TypeCardMockDatas = {
+  id: number;
   id_user:number;
   nome: CardName;
   limite: number;
@@ -37,19 +37,26 @@ type TypeCardMockDatas = {
 
 export const contasMockData:TypeContasMockDatas[] = [
   {
+    id: 1 ,
     id_user: 1,
     nome: 'Nubank',
-    saldo: 120
+    saldo: 122
+  },{
+    id: 2,
+    id_user: 1,
+    nome: 'Inter',
+    saldo: 200
   }
 ]
 
 export const cardsMockData:TypeCardMockDatas[] = [
   {
+    id: 1,
     id_user: 1,
     nome: 'Nubank',
     limite: 260,
-    faturaAtual: 85,
-    limiteDisponivel: 175
+    faturaAtual: 200,
+    limiteDisponivel: 60
   }
 ]
 
@@ -67,6 +74,7 @@ export const totalByCategory = (category: string, data:Transaction[]) => {
     return total;
 };
 
+import { Transaction, User } from '@/types/types';
 import * as Crypto from 'expo-crypto'
 
 export async function hashPassword(password: string): Promise<string> {

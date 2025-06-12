@@ -2,9 +2,14 @@ import { bankLogos } from "@/utils/utils"
 import { MaterialCommunityIcons } from "@expo/vector-icons"
 import { Image, StyleSheet, Text, View } from "react-native"
 
+type creditCardProps = {
+    name: keyof typeof bankLogos;
+    limiteDisponivel: number;
+    faturaAtual: number;
+    moneyVisible: boolean;
+}
 
-
-export function CreditCard({name, moneyVisible} : {name: keyof typeof bankLogos, moneyVisible: boolean}){
+export default function CreditCard({name, moneyVisible, faturaAtual, limiteDisponivel} : creditCardProps){
 
     return (
         <View style={{rowGap: 20}}>
@@ -15,11 +20,11 @@ export function CreditCard({name, moneyVisible} : {name: keyof typeof bankLogos,
             <View style={styles.limiteCartao}>
                 <View>
                     <Text style={{color: 'gray'}}>Disponível</Text>
-                    <Text style={{color: moneyVisible ? 'white' : 'gray'}}>{moneyVisible ? "R$ 175.00" : "---"}</Text>
+                    <Text style={{color: moneyVisible ? 'white' : 'gray'}}>{moneyVisible ? "R$ " + limiteDisponivel : "---"}</Text>
                 </View>
                 <View>
                     <Text style={{color: 'gray'}}>Fatura Atual</Text>
-                    <Text style={{color: moneyVisible ? 'red' : 'gray'}}>{moneyVisible ? "-R$ 85.00" : "---"}</Text>
+                    <Text style={{color: moneyVisible ? 'red' : 'gray'}}>{moneyVisible ? "-R$ " + faturaAtual : "---"}</Text>
                 </View>
             </View>
         </View>

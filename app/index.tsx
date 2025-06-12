@@ -11,15 +11,17 @@ import { Ionicons } from '@expo/vector-icons';
 //logic imports
 import React, { useContext, useEffect, useState } from 'react';
 import { useRouter } from 'expo-router';
-import { SQLiteContext, verificaLogin } from '@/services/sqliteContext';
+// import { SQLiteContext, verificaLogin } from '@/services/sqliteContext';
 import Toast from 'react-native-toast-message'
 import { useAuth } from '@/context/AuthContext';
 import { userMockData } from '@/utils/utils';
+import * as LocalAuthentication from 'expo-local-authentication';
+import { Alert } from 'react-native';
 
 export default function AnimatedLogin() {
 
   //autenticação
-  const db = useContext(SQLiteContext)
+  // const db = useContext(SQLiteContext)
   const router = useRouter()
   const { login } = useAuth()
 
@@ -31,13 +33,14 @@ export default function AnimatedLogin() {
   const [passwordVisible, setPasswordVisible] = useState(false);
 
   //userInfos
-  const [email, setEmail] = useState('')
+  // const [email, setEmail] = useState('')
   const [password, setPassword]  = useState('')
 
   //layout functions
   useEffect(() => {
     offset.value = withTiming(0, { duration: 700, easing: Easing.out(Easing.exp) });
     opacity.value = withTiming(1, { duration: 700 });
+    handleBiometricLogin()
   }, []);
 
   const animatedStyle = useAnimatedStyle(() => ({
@@ -47,22 +50,89 @@ export default function AnimatedLogin() {
 
   //authentication functions
   const signIn = async () => {
-    if(!email || !password) {
+    if(!password) {
       Toast.show({
         type: 'error',
         text1: 'Preencha todos os campos'
       })
       return
     }
-    if (!db){
-      console.log("banco de dados não carregado")
-      return
-    }
+    // if (!db){
+    //   console.log("banco de dados não carregado")
+    //   return
+    // }
     // const user = await verificaLogin(email, password, db)
-    const user = userMockData.find(value => value.id == 1)
+    const user = userMockData.find(value => value.password == password)
     if(user){
       login(user)
       router.push('/pages/home')
+    }else{
+      Toast.show({
+        type: 'error',
+        text1: 'Senha incorreta'
+      })
+      return
+    }
+  }
+
+  async function handleBiometricLogin() {
+    const hasHardware = await LocalAuthentication.hasHardwareAsync();
+    const isEnrolled = await LocalAuthentication.isEnrolledAsync();
+
+    if (!hasHardware || !isEnrolled) {
+      Alert.alert('Biometria não disponível');
+      return;
+    }
+
+    const result = await LocalAuthentication.authenticateAsync({
+      promptMessage: 'Faça login com biometria',
+      fallbackLabel: 'Usar senha',
+      cancelLabel: 'Cancelar',
+    });
+
+    if (result.success) {
+      const user = userMockData.find(value => value.id == 1)
+      user ? login(user) : null
+      router.push('/pages/home')
+    } else {
+      switch (result.error) {
+        case 'user_cancel':
+          Toast.show({
+            type: 'error',
+            text1:'Autenticação cancelada pelo usuário'
+          });
+          break;
+        case 'system_cancel':
+          Toast.show({
+            type: 'error',
+            text1: 'Autenticação cancelada pelo sistema'
+          });
+          break;
+        case 'not_available':
+          Toast.show({
+            type: 'error',
+            text1:'Biometria não disponível'
+          });
+          break;
+        case 'not_enrolled':
+          Toast.show({
+            type: 'error',
+            text1: 'Nenhuma biometria cadastrada'
+          });
+          break;
+        case 'lockout':
+          Toast.show({
+            type: 'error',
+            text1: 'Muitas tentativas falhas. Tente novamente depois.'
+          });
+          break;
+        default:
+          Toast.show({
+            type: 'error',
+            text1: 'Falha na autenticação biométrica'
+          });
+          break;
+      }
     }
   }
 
@@ -75,13 +145,6 @@ export default function AnimatedLogin() {
       <Animated.View style={animatedStyle}>
         <Text style={styles.title}>Entrar no Sistema</Text>
 
-        <TextInput  
-            value={email}
-            onChangeText={setEmail}
-            style={styles.input} 
-            placeholder="Email" 
-            placeholderTextColor="#aaa" 
-        />
         <View style={styles.inputContainer}>
             <TextInput
                 style={styles.input}
@@ -103,18 +166,18 @@ export default function AnimatedLogin() {
             </TouchableOpacity>
         </View>
 
-        <View style={styles.row}>
+        {/* <View style={styles.row}>
           <TouchableOpacity>
             <Text style={styles.link}>Esqueci a senha</Text>
           </TouchableOpacity>
-        </View>
+        </View> */}
 
         <TouchableOpacity onPress={signIn} style={styles.signInButton}>
           <Text style={styles.signInText}>Entrar</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity onPress={() => router.push('/cadastro')} style={styles.signUpButton}>
-          <Text style={styles.signUpText}>Criar Conta</Text>
+        <TouchableOpacity onPress={() => handleBiometricLogin()} style={styles.signUpButton}>
+          <Text style={styles.signUpText}>Entrar com Biometria</Text>
         </TouchableOpacity>
       </Animated.View>
     </View>

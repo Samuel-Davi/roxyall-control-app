@@ -1,13 +1,12 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-import Chart from '@/components/Chart';
+import Chart from '@/components/layout/Chart';
 import { SliceLabel } from 'react-native-pie-chart';
 import { totalByCategory } from '@/utils/utils';
-import { Transaction } from '@/types/Transaction';
-import { SQLiteContext } from '@/services/sqliteContext';
+import { User, Transaction } from '@/types/types';
+// import { SQLiteContext } from '@/services/sqliteContext';
 import { SQLiteDatabase } from 'expo-sqlite';
-import { User } from '@/types/User';
-import { useTransactions } from '@/context/TransactionContext';
+// import { useTransactions } from '@/context/TransactionContext';
 
 
 export type typeData = {
@@ -26,8 +25,8 @@ export async function teste(user: User | null, db: SQLiteDatabase, setState:(val
 
 export default function Dashboard(){
 
-  const db = useContext(SQLiteContext)
-  const {transactions, addTransaction} = useTransactions()
+  // const db = useContext(SQLiteContext)
+  // const {transactions, addTransaction} = useTransactions()
   const [graficoData, setGraficoData] = useState<typeData[]>([{
     label: {text:'ABC'}, 
     value: 30,
@@ -35,31 +34,31 @@ export default function Dashboard(){
     legendValue: 'teste'
   }])
 
-  useEffect(() => {
-    transactions?.map(() => {
-      const fixedData:typeData[] = [];
+  // useEffect(() => {
+  //   transactions?.map(() => {
+  //     const fixedData:typeData[] = [];
 
-      categories.map(item => fixedData.push({
-        label: {text: '', fontWeight: 'bold'},
-        value: totalByCategory(item, transactions) < 0 ? totalByCategory(item, transactions)*-1 : totalByCategory(item, transactions),
-        color: colors[categories.indexOf(item)],
-        legendValue: item
-      }))
+  //     categories.map(item => fixedData.push({
+  //       label: {text: '', fontWeight: 'bold'},
+  //       value: totalByCategory(item, transactions) < 0 ? totalByCategory(item, transactions)*-1 : totalByCategory(item, transactions),
+  //       color: colors[categories.indexOf(item)],
+  //       legendValue: item
+  //     }))
 
-      const filteredData = fixedData.filter(item => item.value > 0)
+  //     const filteredData = fixedData.filter(item => item.value > 0)
 
-      const total = fixedData.reduce((sum, val) => sum + val.value, 0)
+  //     const total = fixedData.reduce((sum, val) => sum + val.value, 0)
 
-      const data:typeData[] = filteredData.map((item:typeData) => ({
-          ...item,
-          label:{
-              ...item.label,
-              text: verificaTamanhoArco(((item.value/total)*100)) ? (((item.value/total)*100).toFixed(1)).toString() + '%' : ''
-          }
-      }))
-      setGraficoData(data)
-    })
-  }, [transactions, addTransaction])
+  //     const data:typeData[] = filteredData.map((item:typeData) => ({
+  //         ...item,
+  //         label:{
+  //             ...item.label,
+  //             text: verificaTamanhoArco(((item.value/total)*100)) ? (((item.value/total)*100).toFixed(1)).toString() + '%' : ''
+  //         }
+  //     }))
+  //     setGraficoData(data)
+  //   })
+  // }, [transactions, addTransaction])
 
   const verificaTamanhoArco = (val:number) =>{
     return val > 5 ? true : false
@@ -67,7 +66,7 @@ export default function Dashboard(){
 
   return (
     <View style={styles.allScreen}>
-      <View style={styles.main}>
+      {/* <View style={styles.main}>
         <Text style={{color: 'white', fontSize: 32}}>Gastos:</Text>
         {transactions && (
           <Chart
@@ -93,7 +92,7 @@ export default function Dashboard(){
             <Text style={{color: 'white'}}>Sem gastos até o momento</Text>
           </View>
         )}
-      </View>
+      </View> */}
     </View>
   );
 };

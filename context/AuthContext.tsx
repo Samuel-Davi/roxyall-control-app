@@ -1,4 +1,4 @@
-import { User } from '@/types/User';
+import { User } from '@/types/types';
 import { createContext, useContext, useState, ReactNode, SetStateAction, Dispatch } from 'react';
 
 type AuthContextType = {

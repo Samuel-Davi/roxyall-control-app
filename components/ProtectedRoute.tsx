@@ -1,6 +1,7 @@
 import { useRouter } from 'expo-router';
 import { useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
+import { Loading } from './layout/Loading';
 
 interface ProtectedRouteProps {
   children: React.ReactNode;
@@ -11,15 +12,14 @@ export function ProtectedRoute({ children }: ProtectedRouteProps) {
   const router = useRouter();
 
   useEffect(() => {
-    if (!user?.id) {
+    if (!user) {
       // Se não estiver logado, manda para login
       router.replace('/');
     }
   }, [user]);
 
-  if (!user?.id) {
-    // Enquanto redireciona, não renderiza nada
-    return null;
+  if (!user) {
+    return <Loading/>;
   }
 
   return <>{children}</>;

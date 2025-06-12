@@ -4,10 +4,11 @@ import { Image, StyleSheet, Text, View } from "react-native";
 
 type AccountBoxProps = {
     name: keyof typeof bankLogos;
+    saldo: number;
     visible: boolean
 }
 
-export default function AccountBox({name, visible} : AccountBoxProps){
+export default function AccountBox({name, saldo, visible} : AccountBoxProps){
     return (
         <View style={styles.accountItem}>
             <View style={styles.accountItem}>
@@ -17,7 +18,7 @@ export default function AccountBox({name, visible} : AccountBoxProps){
                     <Text style={styles.accountType}>Conta manual</Text>
                 </View>          
             </View>
-            <Text style={[styles.accountMoney, {color: visible ? '#fff' : 'gray'}]}>{visible ? "R$ 17,00" : "---"}</Text>
+            <Text style={[styles.accountMoney, {color: visible ? '#fff' : 'gray'}]}>{visible ? "R$ " + saldo : "---"}</Text>
         </View>
     )
 }

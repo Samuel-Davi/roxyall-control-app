@@ -10,10 +10,10 @@ import {
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import { format } from 'date-fns';
 import { AddTransaction } from '@/components/AddTransaction';
-import { Transaction } from '@/types/Transaction';
-import { addTransacionsOnBD, SQLiteContext } from '@/services/sqliteContext';
+import { Transaction } from '@/types/types';
+// import { addTransacionsOnBD, SQLiteContext } from '@/services/sqliteContext';
 import { useAuth } from '@/context/AuthContext';
-import { useTransactions } from '@/context/TransactionContext';
+// import { useTransactions } from '@/context/TransactionContext';
 
 const { height, width } = Dimensions.get('window')
 
@@ -27,21 +27,21 @@ export default function TransactionsScreen() {
 
   //logic
   const { user } = useAuth()
-  const db = useContext(SQLiteContext)
+  // const db = useContext(SQLiteContext)
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
   const [selectedCategory, setSelectedCategory] = useState('Todos');
-  const { transactions, addTransaction } = useTransactions()
+  // const { transactions, addTransaction } = useTransactions()
 
-  const handleSaveNewTransaction = async (data: Transaction) => {
-    let newData = data
-    if(!(newData.category.startsWith("Renda"))){
-      newData.amount *= -1
-    }
-    newData.id = transactions.length + 1
+  // const handleSaveNewTransaction = async (data: Transaction) => {
+  //   let newData = data
+  //   if(!(newData.category.startsWith("Renda"))){
+  //     newData.amount *= -1
+  //   }
+  //   newData.id = transactions.length + 1
     
-    await addTransacionsOnBD(newData, user, db)
-    addTransaction(newData)
-  };
+  //   await addTransacionsOnBD(newData, user, db)
+  //   addTransaction(newData)
+  // };
 
   const showDatePicker = () => setDatePickerVisibility(true);
   const hideDatePicker = () => setDatePickerVisibility(false);
@@ -56,26 +56,26 @@ export default function TransactionsScreen() {
     setSelectedCategory('Todos');
   };
 
-  const orderedData = transactions.sort(
-    (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
-  )
+  // const orderedData = transactions.sort(
+  //   (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
+  // )
 
-  const filteredData = orderedData.filter(tx => {
-    const txDateString = tx.date.slice(0, 10); // Assume tx.date é string ISO
+  // const filteredData = orderedData.filter(tx => {
+  //   const txDateString = tx.date.slice(0, 10); // Assume tx.date é string ISO
   
-    const dateMatch = selectedDate
-      ? txDateString === format(selectedDate, 'yyyy-MM-dd')
-      : true;
+  //   const dateMatch = selectedDate
+  //     ? txDateString === format(selectedDate, 'yyyy-MM-dd')
+  //     : true;
   
-    const categoryMatch =
-      selectedCategory === 'Todos' || tx.category === selectedCategory;
+  //   const categoryMatch =
+  //     selectedCategory === 'Todos' || tx.category === selectedCategory;
   
-    return dateMatch && categoryMatch;
-  });
+  //   return dateMatch && categoryMatch;
+  // });
 
   return (
     <View style={{ flex: 1, backgroundColor: '#0f172a', paddingHorizontal: 16, paddingTop: height*0.015 }}>
-      <TouchableOpacity
+      {/* <TouchableOpacity
         onPress={showDatePicker}
         style={{
           backgroundColor: '#1e293b',
@@ -153,7 +153,7 @@ export default function TransactionsScreen() {
         visible={modalVisible}
         onClose={() => setModalVisible(false)}
         onSubmit={handleSaveNewTransaction}
-      />
+      /> */}
     </View>
   );
 }

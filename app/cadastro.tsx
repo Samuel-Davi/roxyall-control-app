@@ -3,7 +3,7 @@ import { useContext, useEffect, useState } from 'react';
 import { useRouter } from 'expo-router';
 import Animated, { Easing, useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated';
 import { Ionicons } from '@expo/vector-icons';
-import { Loading } from '@/components/Loading';
+import { Loading } from '@/components/layout/Loading';
 import Toast from 'react-native-toast-message';
 import { cadastroUsuario, SQLiteContext } from '@/services/sqliteContext';
 import { User } from '@/types/User';

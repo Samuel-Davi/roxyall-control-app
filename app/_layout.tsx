@@ -1,6 +1,6 @@
 import { AuthProvider } from "@/context/AuthContext";
 // import { setupDatabase } from "@/services/setupDatabase";
-import { SQLiteProvider } from "@/services/sqliteContext";
+// import { SQLiteProvider } from "@/services/sqliteContext";
 import { Stack } from "expo-router";
 // import { useEffect } from "react";
 import Toast from 'react-native-toast-message'
@@ -14,7 +14,7 @@ export default function RootLayout() {
 
   return (
     <AuthProvider>
-      <SQLiteProvider databaseName="roxyall-db">
+      {/* <SQLiteProvider databaseName="roxyall-db"> */}
         <SafeAreaProvider>
           <SafeAreaView
             style={{ flex: 1, backgroundColor: '#0f172a' }}
@@ -29,7 +29,7 @@ export default function RootLayout() {
             </Stack>
           </SafeAreaView>
         </SafeAreaProvider>
-      </SQLiteProvider>
+      {/* </SQLiteProvider> */}
       <Toast />
     </AuthProvider>
   )

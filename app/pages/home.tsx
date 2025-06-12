@@ -2,9 +2,10 @@ import React, { useContext, useEffect, useState } from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
 import { Ionicons, MaterialIcons } from '@expo/vector-icons';
 import { useAuth } from '@/context/AuthContext';
-import { getSaldoFromBD, SQLiteContext } from '@/services/sqliteContext';
-import { CreditCard } from '@/components/CreditCard';
-import AccountBox from '@/components/AccountBox';
+// import { getSaldoFromBD, SQLiteContext } from '@/services/sqliteContext';
+import CreditCard from '@/components/layout/CreditCard';
+import AccountBox from '@/components/layout/AccountBox';
+import { cardsMockData, contasMockData } from '@/utils/utils';
 
 export default function Home() {
 
@@ -12,12 +13,14 @@ export default function Home() {
   const [saldoVisible, setSaldoVisible] = useState(false)
   const [faturaVisible, setFaturaVisible] = useState(false)
 
-  const { user } = useAuth()
-  const db = useContext(SQLiteContext)
+  const { user, logout } = useAuth()
+  // const db = useContext(SQLiteContext)
   const userImage = require("@/assets/images/eu.jpeg")
 
   const updateSaldo = async () => {
-      const result = await getSaldoFromBD(user, db)
+      // const result = await getSaldoFromBD(user, db)
+      const mockSaldo = contasMockData.reduce((acc, item) => acc + item.saldo, 0)
+      const result = mockSaldo
       if(result){
           setSaldo(result)
       }
@@ -39,8 +42,8 @@ export default function Home() {
           </View>
         </View>
         <View style={styles.headerIcons}>
-          <TouchableOpacity style={styles.iconButton}>
-            <Ionicons name="notifications-outline" size={20} color="white" />
+          <TouchableOpacity onPress={() => logout()} style={styles.iconButton}>
+            <Ionicons name="log-out" size={20} color="white" />
           </TouchableOpacity>
         </View>
       </View>
@@ -58,7 +61,9 @@ export default function Home() {
           </TouchableOpacity>
         </View>
         <Text style={styles.infoText}>Minhas contas</Text>
-        <AccountBox name='Carteira' visible={saldoVisible} />
+        {contasMockData.map(item => (
+          <AccountBox key={item.id} saldo={item.saldo} name={item.nome} visible={saldoVisible} />
+        ))}
         <TouchableOpacity style={styles.buttonOutline}>
           <Text style={styles.buttonOutlineText}>Gerenciar contas</Text>
         </TouchableOpacity>
@@ -74,7 +79,10 @@ export default function Home() {
           </TouchableOpacity>
         </View>
         <Text style={styles.infoText}>Meus Cartões</Text>
-        <CreditCard name='Nubank' moneyVisible={faturaVisible} />
+        {cardsMockData.map(item => (
+          <CreditCard key={item.id} moneyVisible={faturaVisible} name={item.nome}
+          faturaAtual={item.faturaAtual} limiteDisponivel={item.limiteDisponivel} />
+        ))}
         <TouchableOpacity style={styles.buttonOutline}>
           <Text style={styles.buttonOutlineText}>Gerenciar Cartões</Text>
         </TouchableOpacity>
