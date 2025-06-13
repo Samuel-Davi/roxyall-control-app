@@ -19,7 +19,7 @@ export default function ManageAccounts() {
       </View>
       <View style={styles.main}>
         {contasMockData.map((account) => (
-          <AccountBox key={account.id} visible={true} saldo={account.saldo} name={account.nome} />
+          <AccountBox id={account.id} key={account.id} visible={true} saldo={account.saldo} name={account.nome} />
         ))}
       </View>
     </View>

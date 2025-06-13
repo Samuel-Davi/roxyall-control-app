@@ -19,14 +19,14 @@ export const cardNames = [...banksNames, "Outros"] as const
 type AccountName = typeof accountNames[number];
 type CardName = typeof cardNames[number];
 
-type TypeContasMockDatas = {
+export type TypeContasMockDatas = {
   id:number;
   id_user:number;
   nome: AccountName;
   saldo: number
 }
 
-type TypeCardMockDatas = {
+export type TypeCardMockDatas = {
   id: number;
   id_user:number;
   nome: CardName;

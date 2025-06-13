@@ -1,14 +1,16 @@
 import { bankLogos } from "@/utils/utils";
 import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
+import { router } from "expo-router";
 import { Image, Pressable, StyleSheet, Text, View } from "react-native";
 
 type AccountBoxProps = {
+    id: number;
     name: keyof typeof bankLogos;
     saldo: number;
     visible: boolean
 }
 
-export default function AccountBox({name, saldo, visible} : AccountBoxProps){
+export default function AccountBox({id, name, saldo, visible} : AccountBoxProps){
     return (
         <View style={styles.accountItem}>
             <View style={styles.upinfo}>
@@ -19,7 +21,7 @@ export default function AccountBox({name, saldo, visible} : AccountBoxProps){
                         <Text style={styles.accountType}>Conta manual</Text>
                     </View>
                 </View>
-                <Pressable>
+                <Pressable onPress={() => router.push({pathname: '/editsPages/editAccount', params: {id: id}})}>
                     <Ionicons name='arrow-forward' size={24} color="green" />
                 </Pressable>
             </View>
