@@ -13,7 +13,6 @@ export function ProtectedRoute({ children }: ProtectedRouteProps) {
 
   useEffect(() => {
     if (!user) {
-      // Se não estiver logado, manda para login
       router.replace('/');
     }
   }, [user]);

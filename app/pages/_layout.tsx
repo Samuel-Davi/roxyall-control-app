@@ -1,7 +1,7 @@
 import { Tabs } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { View, StyleSheet } from 'react-native';
-import Header from '@/components/layout/Header';
+import Header from '@/components/layout/pages/Header';
 import { ProtectedRoute } from '@/components/ProtectedRoute';
 import { useAuth } from '@/context/AuthContext';
 // import { TransactionsProvider } from '@/context/TransactionContext';
@@ -15,7 +15,6 @@ export default function Layout() {
       style={styles.background}
     >
         {/* <TransactionsProvider> */}
-          {/* <Header/> */}
           <Tabs
             screenOptions={() => ({
               headerShown: false,
@@ -33,60 +32,37 @@ export default function Layout() {
               tabBarInactiveTintColor: '#aaa',
             })}
           >
-            <ProtectedRoute>
-              <Tabs.Screen
-              name='home'
-              options={{
-                title: "Home",
-                tabBarIcon: () => {
-                  return <Ionicons name='home' size={18} color='white' />
-                }
-              }}
-            />
-            </ProtectedRoute>
             
-            <ProtectedRoute>
               <Tabs.Screen
-              name="transactions"
-              options={{
-                title: 'Transações',
-                tabBarIcon: () => {
-                  return <Ionicons name='swap-horizontal' size={18} color='white' />;
-                }
-              }}
-            />
-            </ProtectedRoute>
-            
-            <ProtectedRoute>
-              <Tabs.Screen
-              name="dashboard"
-              options={{
-                title: 'Painel',
-                tabBarIcon: () => {
-                  return <Ionicons name='speedometer' size={18} color='white' />;
-                }
-              }}
-            />
-            </ProtectedRoute>
-            
-            {/* {(user && user.id === 1) ? (
-              <Tabs.Screen
-                name='dados'
+                name='home'
                 options={{
-                  title: 'Dados',
+                  title: "Home",
                   tabBarIcon: () => {
-                    return <Ionicons name='analytics-outline' color='white'/>
+                    return <Ionicons name='home' size={18} color='white' />
                   }
                 }}
               />
-            ): (
+
               <Tabs.Screen
-                name='dados'
+                name="transactions"
                 options={{
-                  href:null
+                  title: 'Transações',
+                  tabBarIcon: () => {
+                    return <Ionicons name='swap-horizontal' size={18} color='white' />;
+                  }
                 }}
               />
-            )} */}
+
+              <Tabs.Screen
+                name="dashboard"
+                options={{
+                  title: 'Painel',
+                  tabBarIcon: () => {
+                    return <Ionicons name='speedometer' size={18} color='white' />;
+                  }
+                }}
+              />
+            
           </Tabs>
         {/* </TransactionsProvider> */}
     </View>
