@@ -12,7 +12,7 @@ export default function AccountBox({name, saldo, visible} : AccountBoxProps){
     return (
         <View style={styles.accountItem}>
             <View style={styles.accountItem}>
-                {name != 'Carteira' ? (<Image style={styles.bankLogo} source={bankLogos[name]} />) : (<MaterialCommunityIcons name='wallet' size={50} color="white" />)}
+                {name != 'Carteira' ? (<Image style={styles.bankLogo} source={bankLogos[name]} />) : (<MaterialCommunityIcons name='wallet' size={44} color="white" />)}
                 <View>
                     <Text style={styles.accountName}>{name}</Text>
                     <Text style={styles.accountType}>Conta manual</Text>

@@ -13,18 +13,16 @@ type AccountBoxProps = {
 export default function AccountBox({id, name, saldo, visible} : AccountBoxProps){
     return (
         <View style={styles.accountItem}>
-            <View style={styles.upinfo}>
+            <Pressable onPress={() => router.push({pathname: '/editsPages/editAccount', params: {id: id}})} style={styles.upinfo}>
                 <View style={{flexDirection: 'row', columnGap: 10, alignItems: 'center'}}>
-                    {name != 'Carteira' ? (<Image style={styles.bankLogo} source={bankLogos[name]} />) : (<MaterialCommunityIcons name='wallet' size={50} color="white" />)}
+                    {name != 'Carteira' ? (<Image style={styles.bankLogo} source={bankLogos[name]} />) : (<MaterialCommunityIcons name='wallet' size={44} color="white" />)}
                     <View>
                         <Text style={styles.accountName}>{name}</Text>
                         <Text style={styles.accountType}>Conta manual</Text>
                     </View>
                 </View>
-                <Pressable onPress={() => router.push({pathname: '/editsPages/editAccount', params: {id: id}})}>
-                    <Ionicons name='arrow-forward' size={24} color="green" />
-                </Pressable>
-            </View>
+                <Ionicons name='arrow-forward' size={24} color="green" />
+            </Pressable>
             <View style={styles.downinfo}>
                 <Text style={[styles.accountMoney, {color: visible ? '#fff' : 'gray'}]}>Saldo atual: {visible ? "R$ " + saldo : "---"}</Text>
             </View>

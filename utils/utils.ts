@@ -16,8 +16,8 @@ export const accountNames = [...banksNames, "Carteira"] as const
 
 export const cardNames = [...banksNames, "Outros"] as const
 
-type AccountName = typeof accountNames[number];
-type CardName = typeof cardNames[number];
+export type AccountName = typeof accountNames[number];
+export type CardName = typeof cardNames[number];
 
 export type TypeContasMockDatas = {
   id:number;
@@ -46,8 +46,16 @@ export const contasMockData:TypeContasMockDatas[] = [
     id_user: 1,
     nome: 'Inter',
     saldo: 200
+  },
+  {
+    id: 3,
+    id_user: 1,
+    nome: 'Picpay',
+    saldo: 50
   }
 ]
+
+
 
 export const cardsMockData:TypeCardMockDatas[] = [
   {

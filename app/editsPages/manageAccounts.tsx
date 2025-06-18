@@ -9,11 +9,11 @@ export default function ManageAccounts() {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <Pressable onPress={() => router.push('/pages/home')}>
+        <Pressable style={styles.iconButton} onPress={() => router.push('/pages/home')}>
           <Ionicons name='arrow-back' size={28} color="white" />
         </Pressable>
         <Text style={{color: 'white', fontSize: 20}} >Contas</Text>
-        <Pressable onPress={() => console.log('Add Account Pressed')}>
+        <Pressable style={styles.iconButton} onPress={() => router.push('/editsPages/createAccount')}>
           <Ionicons name='add-circle-outline' size={28} color="white" />
         </Pressable>
       </View>
@@ -44,5 +44,10 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     padding: 16,
     rowGap: 20
+  },
+  iconButton: {
+    backgroundColor: '#1e293b',
+    padding: 8,
+    borderRadius: 8,
   }
 })

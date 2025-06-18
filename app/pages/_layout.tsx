@@ -28,8 +28,6 @@ export default function Layout() {
                 height: 60,
                 elevation: 0,
               },
-              tabBarActiveTintColor: '#00ffff',
-              tabBarInactiveTintColor: '#aaa',
             })}
           >
             

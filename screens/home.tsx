@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, Image, TouchableOpacity, ScrollView } from 'react-native';
 import { Ionicons, MaterialIcons } from '@expo/vector-icons';
 import { useAuth } from '@/context/AuthContext';
 // import { getSaldoFromBD, SQLiteContext } from '@/services/sqliteContext';
@@ -49,45 +49,47 @@ export default function Home(){
           </View>
         </View>
 
-        {/* Contas */}
-        <View style={styles.card}>
-            {/* Saldo geral */}
-          <View style={styles.saldoGeral}>
-            <View>
-              <Text style={styles.infoText}>Saldo geral</Text>
-              <Text style={[styles.money, {color: saldoVisible ? '#fff' : 'gray'}]}>{saldoVisible ?  "R$ " + saldo : "---"}</Text>
+        {/* Main */}
+        <ScrollView style={styles.main} contentContainerStyle={{paddingBottom: 20}}>
+          <View style={styles.card}>
+              {/* Saldo geral */}
+            <View style={styles.saldoGeral}>
+              <View>
+                <Text style={styles.infoText}>Saldo geral</Text>
+                <Text style={[styles.money, {color: saldoVisible ? '#fff' : 'gray'}]}>{saldoVisible ?  "R$ " + saldo : "---"}</Text>
+              </View>
+              <TouchableOpacity onPress={() => setSaldoVisible(prev => !prev)}>
+                <Ionicons name={saldoVisible ? 'eye' : 'eye-off'} size={28} color="white" />
+              </TouchableOpacity>
             </View>
-            <TouchableOpacity onPress={() => setSaldoVisible(prev => !prev)}>
-              <Ionicons name={saldoVisible ? 'eye' : 'eye-off'} size={28} color="white" />
+            <Text style={styles.infoText}>Minhas contas</Text>
+            {contasMockData.map(item => (
+              <AccountBox key={item.id} saldo={item.saldo} name={item.nome} visible={saldoVisible} />
+            ))}
+            <TouchableOpacity onPress={() => router.push('/editsPages/manageAccounts')} style={styles.buttonOutline}>
+              <Text style={styles.buttonOutlineText}>Gerenciar contas</Text>
             </TouchableOpacity>
           </View>
-          <Text style={styles.infoText}>Minhas contas</Text>
-          {contasMockData.map(item => (
-            <AccountBox key={item.id} saldo={item.saldo} name={item.nome} visible={saldoVisible} />
-          ))}
-          <TouchableOpacity onPress={() => router.push('/editsPages/manageAccounts')} style={styles.buttonOutline}>
-            <Text style={styles.buttonOutlineText}>Gerenciar contas</Text>
-          </TouchableOpacity>
-        </View>
-        <View style={styles.card}>
-          <View style={styles.saldoGeral}>
-            <View>
-              <Text style={styles.infoText}>Todas as Faturas</Text>
-              <Text style={[styles.money, {color: faturaVisible ? 'red' : 'gray'}]}>{faturaVisible ?  "-R$ 85.00" : "---"}</Text>
+          <View style={styles.card}>
+            <View style={styles.saldoGeral}>
+              <View>
+                <Text style={styles.infoText}>Todas as Faturas</Text>
+                <Text style={[styles.money, {color: faturaVisible ? 'red' : 'gray'}]}>{faturaVisible ?  "-R$ 85.00" : "---"}</Text>
+              </View>
+              <TouchableOpacity onPress={() => setFaturaVisible(prev => !prev)}>
+                <Ionicons name={faturaVisible ? 'eye' : 'eye-off'} size={28} color="white" />
+              </TouchableOpacity>
             </View>
-            <TouchableOpacity onPress={() => setFaturaVisible(prev => !prev)}>
-              <Ionicons name={faturaVisible ? 'eye' : 'eye-off'} size={28} color="white" />
+            <Text style={styles.infoText}>Meus Cartões</Text>
+            {cardsMockData.map(item => (
+              <CreditCard key={item.id} moneyVisible={faturaVisible} name={item.nome}
+              faturaAtual={item.faturaAtual} limiteDisponivel={item.limiteDisponivel} />
+            ))}
+            <TouchableOpacity style={styles.buttonOutline}>
+              <Text style={styles.buttonOutlineText}>Gerenciar Cartões</Text>
             </TouchableOpacity>
           </View>
-          <Text style={styles.infoText}>Meus Cartões</Text>
-          {cardsMockData.map(item => (
-            <CreditCard key={item.id} moneyVisible={faturaVisible} name={item.nome}
-            faturaAtual={item.faturaAtual} limiteDisponivel={item.limiteDisponivel} />
-          ))}
-          <TouchableOpacity style={styles.buttonOutline}>
-            <Text style={styles.buttonOutlineText}>Gerenciar Cartões</Text>
-          </TouchableOpacity>
-        </View>
+        </ScrollView>
       </View>
   );
 }
@@ -104,6 +106,9 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     paddingVertical: 15,
     columnGap: 10
+  },
+  main: {
+    
   },
   greeting: {
     color: '#fff',
