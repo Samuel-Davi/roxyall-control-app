@@ -32,6 +32,8 @@ export type TypeCardMockDatas = {
   nome: CardName;
   limite: number;
   faturaAtual:number;
+  diaVencimento: number;
+  diaFechamento: number;
   limiteDisponivel: number;
 }
 
@@ -63,6 +65,8 @@ export const cardsMockData:TypeCardMockDatas[] = [
     id_user: 1,
     nome: 'Nubank',
     limite: 260,
+    diaVencimento: 5,
+    diaFechamento: 26,
     faturaAtual: 200,
     limiteDisponivel: 60
   }

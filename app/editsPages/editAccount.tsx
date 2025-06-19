@@ -78,7 +78,7 @@ export default function EditAccount() {
             <View style={styles.main}>
                 {account ? (
                     <View style={{ backgroundColor: '#1e293b', padding: 15, borderRadius: 10 }}>
-                        <Text style={{ color: 'white', marginBottom: 8 }}>Banco:</Text>
+                        <Text style={{ color: 'white', marginBottom: 16 }}>Banco:</Text>
                         <Picker
                             selectedValue={selectedBank}
                             style={{ color: 'white', backgroundColor: '#334155' }}
@@ -90,7 +90,7 @@ export default function EditAccount() {
                             ))}
                             {/* Adicione outros bancos conforme necessário */}
                         </Picker>
-                        <Text style={{ color: 'white', marginTop: 16 }}>Saldo:</Text>
+                        <Text style={{ color: 'white', marginVertical: 16 }}>Saldo:</Text>
                         <TextInput
                             value={account.saldo.toString()}
                             onChangeText={text =>

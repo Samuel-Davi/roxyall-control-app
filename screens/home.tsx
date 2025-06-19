@@ -12,23 +12,26 @@ export default function Home(){
 
   const [saldo, setSaldo] = useState(0.0)
   const [saldoVisible, setSaldoVisible] = useState(false)
+  const [faturaTotal, setFaturaTotal] = useState(0.0)
   const [faturaVisible, setFaturaVisible] = useState(false)
 
   const { user, logout } = useAuth()
   // const db = useContext(SQLiteContext)
   const userImage = require("@/assets/images/eu.jpeg")
 
-  const updateSaldo = async () => {
+  const updateSaldoAndFatura = async () => {
       // const result = await getSaldoFromBD(user, db)
       const mockSaldo = contasMockData.reduce((acc, item) => acc + item.saldo, 0)
       const result = mockSaldo
       if(result){
           setSaldo(result)
       }
+      const mockFaturaTotal = cardsMockData.reduce((acc, item) => acc + item.faturaAtual, 0)
+      setFaturaTotal(mockFaturaTotal)
   }
 
   useEffect(() => {
-    updateSaldo()
+    updateSaldoAndFatura()
   }, [])
 
   return (
@@ -74,7 +77,7 @@ export default function Home(){
             <View style={styles.saldoGeral}>
               <View>
                 <Text style={styles.infoText}>Todas as Faturas</Text>
-                <Text style={[styles.money, {color: faturaVisible ? 'red' : 'gray'}]}>{faturaVisible ?  "-R$ 85.00" : "---"}</Text>
+                <Text style={[styles.money, {color: faturaVisible ? 'red' : 'gray'}]}>{faturaVisible ?  "-R$ " + faturaTotal : "---"}</Text>
               </View>
               <TouchableOpacity onPress={() => setFaturaVisible(prev => !prev)}>
                 <Ionicons name={faturaVisible ? 'eye' : 'eye-off'} size={28} color="white" />
@@ -85,7 +88,7 @@ export default function Home(){
               <CreditCard key={item.id} moneyVisible={faturaVisible} name={item.nome}
               faturaAtual={item.faturaAtual} limiteDisponivel={item.limiteDisponivel} />
             ))}
-            <TouchableOpacity style={styles.buttonOutline}>
+            <TouchableOpacity onPress={() => router.push('/editsPages/manageCards')} style={styles.buttonOutline}>
               <Text style={styles.buttonOutlineText}>Gerenciar Cartões</Text>
             </TouchableOpacity>
           </View>

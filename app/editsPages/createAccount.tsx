@@ -70,8 +70,6 @@ export default function CreateAccount() {
                     placeholder="Digite o saldo"
                     placeholderTextColor="#9ca3af"
                     onChangeText={(text) => {
-                        // Aqui você pode adicionar lógica para lidar com a entrada do saldo
-                        console.log(`Saldo digitado: ${text}`);
                         setSaldo(Number(text));
                     }}
                 />
